@@ -27,16 +27,16 @@ output:
   broker:
     outputs:
     - stdout: {}
-#    - kafka:
-#        addresses:
-#        - ${KAFKA_ADDRESS}
-#        topic: ${KAFKA_TOPIC}
-#        client_id: organization-collector
-#        target_version: 1.0.0
-#        tls:
-#          enabled: ${KAFKA_TLS_ENABLED}
-#        sasl:
-#          enabled: ${KAFKA_SASL_ENABLED}
-#          mechanism: ${KAFKA_SASL_MECHANISM}
-#          user: ${KAFKA_SASL_USER}
-#          password: ${KAFKA_SASL_PASSWORD}
+    - kafka:
+        addresses:
+        - ${KAFKA_ADDRESS}
+        topic: ${KAFKA_TOPIC}
+        client_id: organization-collector
+        target_version: 1.0.0
+        tls:
+          enabled: ${KAFKA_TLS_ENABLED}
+        sasl:
+          enabled: ${KAFKA_SASL_ENABLED}
+          mechanism: ${KAFKA_SASL_MECHANISM}
+          user: ${KAFKA_SASL_USER}
+          password: ${KAFKA_SASL_PASSWORD}
