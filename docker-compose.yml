@@ -1,0 +1,33 @@
+services:
+  server:
+    image: jeffail/benthos:3.65
+    volumes:
+    - ./server.yaml:/config.yaml
+    command:
+    - -c
+    - /config.yaml
+    - -w
+    - --log.level
+    - DEBUG
+    ports:
+    - 4195:4195/tcp
+    environment:
+      OUTPUT: stdout
+
+  client:
+    image: jeffail/benthos:3.65
+    volumes:
+    - ./client.yaml:/config.yaml
+    environment:
+      ENDPOINT: http://server:4195
+      ORGANIZATION: foo
+    depends_on:
+    - server
+    command:
+    - -c
+    - /config.yaml
+    - -w
+    - --log.level
+    - DEBUG
+    ports:
+    - 4194:4194/tcp

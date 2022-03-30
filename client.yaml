@@ -1,0 +1,25 @@
+http:
+  enabled: true
+  address: 0.0.0.0:4194
+
+input:
+  http_server:
+    path: /
+    allowed_verbs:
+    - POST
+
+pipeline:
+  processors:
+  - bloblang: |
+      root = this
+      meta organization = env("ORGANIZATION")
+
+output:
+  http_client:
+    url: ${ENDPOINT}
+    verb: POST
+    headers:
+      Content-Type: application/json
+    metadata:
+      include_patterns:
+      - .*

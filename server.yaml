@@ -1,0 +1,42 @@
+http:
+  enabled: true
+  address: 0.0.0.0:4195
+
+input:
+  http_server:
+    path: /
+    allowed_verbs:
+    - POST
+
+pipeline:
+  processors:
+  - bloblang: |
+      meta organization = meta("Organization")
+      meta Organization = deleted()
+      root = this
+  - catch:
+    - log:
+        level: ERROR
+        message: Rejecting message because of empty organization
+    - bloblang: root = deleted()
+  - log:
+      level: DEBUG
+      message: Got message from organization ${! meta("organization") }
+
+output:
+  broker:
+    outputs:
+    - stdout: {}
+#    - kafka:
+#        addresses:
+#        - ${KAFKA_ADDRESS}
+#        topic: ${KAFKA_TOPIC}
+#        client_id: organization-collector
+#        target_version: 1.0.0
+#        tls:
+#          enabled: ${KAFKA_TLS_ENABLED}
+#        sasl:
+#          enabled: ${KAFKA_SASL_ENABLED}
+#          mechanism: ${KAFKA_SASL_MECHANISM}
+#          user: ${KAFKA_SASL_USER}
+#          password: ${KAFKA_SASL_PASSWORD}
