@@ -3,6 +3,7 @@ services:
     image: jeffail/benthos:3.65
     volumes:
     - ./server.yaml:/config.yaml
+    - ./auth.yaml:/auth.yaml
     command:
     - -c
     - /config.yaml
@@ -13,6 +14,9 @@ services:
     - 4195:4195/tcp
     environment:
       OUTPUT: stdout
+      HTTP_BASIC_USERNAME: client1
+      HTTP_BASIC_PASSWORD: pass
+      ORGANIZATION: foo
 
   client:
     image: jeffail/benthos:3.65
@@ -21,6 +25,8 @@ services:
     environment:
       ENDPOINT: http://server:4195
       ORGANIZATION: foo
+      ENDPOINT_USERNAME: client1
+      ENDPOINT_PASSWORD: pass
     depends_on:
     - server
     command:

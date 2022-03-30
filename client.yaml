@@ -26,3 +26,7 @@ output:
     tls:
       enabled: ${ENDPOINT_TLS_ENABLED}
       skip_cert_verify: ${ENDPOINT_SKIP_CERT_VERIFY}
+    basic_auth:
+      enabled: true
+      username: ${ENDPOINT_USERNAME}
+      password: ${ENDPOINT_PASSWORD}

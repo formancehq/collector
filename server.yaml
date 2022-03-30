@@ -11,17 +11,42 @@ input:
 pipeline:
   processors:
   - bloblang: |
-      meta organization = meta("Organization")
+      let orga = meta("organization") | meta("Organization")
+      meta organization = $orga
       meta Organization = deleted()
-      root = this
+      root = if $orga != env("ORGANIZATION") { throw("Mismatch organization") } else { this }
   - catch:
     - log:
         level: ERROR
         message: Rejecting message because of empty organization
     - bloblang: root = deleted()
-  - log:
-      level: DEBUG
-      message: Got message from organization ${! meta("organization") }
+  - bloblang: |
+      root = this
+      meta Authorization = meta("Authorization")
+  - catch:
+    - log:
+        level: ERROR
+        message: Rejecting message, no auth provided
+    - bloblang: root = deleted()
+  - switch:
+    - check: meta("Authorization").uppercase().has_prefix("BASIC ")
+      processors:
+      - bloblang: |
+          let parts = meta("Authorization").slice(6).decode("base64").split(":")
+          let expectedUsername = env("HTTP_BASIC_USERNAME")
+          let expectedPassword = env("HTTP_BASIC_PASSWORD")
+          let username = $parts.index(0).string()
+          let password = $parts.index(1).string()
+          root = if $expectedPassword != $password { throw("Invalid provided password") } else { this }
+    - processors:
+      - bloblang: root = throw("Unknown auth method")
+  - catch:
+    - log:
+        level: ERROR
+        message: Rejecting message because of invalid authentication
+    - bloblang: root = deleted()
+  - bloblang: |
+      meta Authorization = deleted()
 
 output:
   broker:
