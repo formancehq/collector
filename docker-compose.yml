@@ -18,7 +18,6 @@ services:
     - 4196:4196/tcp
     environment:
       INTROSPECT_URL: https://api.staging.numary.cloud/auth/introspect
-      OUTPUT: stdout
 
   client:
     image: golang:1.18-alpine
@@ -28,8 +27,6 @@ services:
     environment:
       ENDPOINT: http://server:4196
       ORGANIZATION: ${ORG}
-      ENDPOINT_USERNAME: client1
-      ENDPOINT_PASSWORD: pass
       AUTH_URL: https://api.staging.numary.cloud/auth/authenticate/tokens
       AUTH_TOKEN: ${M2M_TOKEN}
     depends_on:
