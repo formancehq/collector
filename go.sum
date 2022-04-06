@@ -676,6 +676,8 @@ github.com/numary/go-libs v0.0.0-20220406123203-62db347d092d h1:5cJhD6Lj6sA0v/oD
 github.com/numary/go-libs v0.0.0-20220406123203-62db347d092d/go.mod h1:Ko0TOXuzUP7hP70Vj+E8xRU0BBqxHKeh/He/r8xqmNY=
 github.com/numary/oauth2-introspect v0.0.0-20220406120928-f0dd675cd4d7 h1:53BWj0mE30ESKlr1mFTkU/hySev42tEqDeTW4sr9rXE=
 github.com/numary/oauth2-introspect v0.0.0-20220406120928-f0dd675cd4d7/go.mod h1:SQNARY8BIl4VYD0eHWPrcMXUCOlXMipBB9egoHU17ow=
+github.com/numary/oauth2-introspect v0.0.0-20220406133319-6f34d6181984 h1:/1soEOUbN6rCawPH337V02TRjENNHVvC5mfqJ5C51z4=
+github.com/numary/oauth2-introspect v0.0.0-20220406133319-6f34d6181984/go.mod h1:mIKPSDPfepyt/cxf4L2GhRo/kFfck/IiN0uhnLswA0g=
 github.com/nxadm/tail v1.4.4/go.mod h1:kenIhsEOeOJmVchQTgglprH7qJGnHDVpk1VPCcaMI8A=
 github.com/nxadm/tail v1.4.8/go.mod h1:+ncqLTQzXmGhMZNUePPaPqPvBxHAIsmXswZKocGu+AU=
 github.com/oklog/ulid v1.3.1/go.mod h1:CirwcVhetQ6Lv90oh/F+FBtV6XMibvdAFo93nm5qn4U=

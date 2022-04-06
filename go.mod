@@ -101,7 +101,7 @@ require (
 	github.com/nsf/jsondiff v0.0.0-20210926074059-1e845ec5d249 // indirect
 	github.com/nsqio/go-nsq v1.1.0 // indirect
 	github.com/numary/go-libs v0.0.0-20220406123203-62db347d092d // indirect
-	github.com/numary/oauth2-introspect v0.0.0-20220406120928-f0dd675cd4d7 // indirect
+	github.com/numary/oauth2-introspect v0.0.0-20220406133319-6f34d6181984 // indirect
 	github.com/olivere/elastic/v7 v7.0.32 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/patrobinson/gokini v0.1.0 // indirect
