@@ -5,7 +5,10 @@ input:
   numary_collector:
     introspect_url: ${INTROSPECT_URL}
     address: 0.0.0.0:4196
-
+    cache:
+      ttl: 1m
+      num_counter: 10000 # From the doc of the caching library (https://github.com/dgraph-io/ristretto), this value five good performance if 10*max_cost
+      max_cost: 1000 # Allow to keep 1000 bearer tokens in cache
 
 output:
   broker:
