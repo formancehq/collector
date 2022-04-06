@@ -1,0 +1,69 @@
+project_name: numary
+env:
+  - GO111MODULE=on
+  - GOPROXY=https://proxy.golang.org
+before:
+  hooks:
+    - go mod download
+
+builds:
+  - binary: benthos
+    id: numary_linux
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -tags=json1
+
+archives:
+  - id: "numary"
+    builds:
+      - numary_linux
+    format: tar.gz
+    name_template: "{{.ProjectName}}_{{.Version}}_{{.Os}}-{{.Arch}}"
+    replacements:
+      amd64: 64bit
+      386: 32bit
+      arm: ARM
+      arm64: ARM64
+      linux: Linux
+
+checksum:
+  name_template: 'checksums_linux.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^spec:'
+      - Merge pull request
+      - Merge remote-tracking branch
+      - Merge branch
+      - go mod tidy
+  groups:
+    - title: 'New Features'
+      regexp: "^.*feat[(\\w)]*:+.*$"
+      order: 0
+    - title: 'Bug fixes'
+      regexp: "^.*fix[(\\w)]*:+.*$"
+      order: 10
+    - title: Other work
+      order: 999
+
+release:
+  prerelease: auto
+  footer: |
+    **Full Changelog**: https://github.com/numary/ledger/compare/{{ .PreviousTag }}...{{ .Tag }}
+    ## What to do next?
+    - Read the [documentation](https://docs.numary.com/oss/ledger/get-started/installation)
+    - Join our [Discord server](https://discord.gg/xyHvcbzk4w)

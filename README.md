@@ -1,4 +1,4 @@
-# organization-collector
+# collector
 
 This repository implements two benthos components.
 One input, and one output, each named "numary_collector".
@@ -25,7 +25,7 @@ input:
       max_cost: 1000 # Allow to keep 1000 bearer tokens in cache, each bearer having a cost of 1
 ```
 
-# Output
+## Output
 
 ```
 output:

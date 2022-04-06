@@ -1,4 +1,4 @@
-module github.com/numary/organization-collector
+module github.com/numary/collector
 
 go 1.18
 
