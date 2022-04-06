@@ -1,4 +1,4 @@
-project_name: numary
+project_name: benthos
 env:
   - GO111MODULE=on
   - GOPROXY=https://proxy.golang.org
