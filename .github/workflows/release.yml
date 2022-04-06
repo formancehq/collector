@@ -54,7 +54,7 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/numary/organization-collector:latest,ghcr.io/numary/organization-collector:${{ github.event.release.tag_name }}
+          tags: ghcr.io/numary/collector:latest,ghcr.io/numary/collector:${{ github.event.release.tag_name }}
           build-args: |
             APP_SHA=${{ github.sha }}
             VERSION=${{ github.event.release.tag_name }}

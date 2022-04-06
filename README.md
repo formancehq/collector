@@ -1,4 +1,4 @@
-# organization-collector
+# collector
 
 This repository implements two benthos components.
 One input, and one output, each named "numary_collector".
