@@ -1,67 +1,13 @@
 http:
-  enabled: true
-  address: 0.0.0.0:4195
+  enabled: false
 
 input:
-  http_server:
-    path: /
-    allowed_verbs:
-    - POST
+  numary_collector:
+    introspect_url: ${INTROSPECT_URL}
+    address: 0.0.0.0:4196
 
-pipeline:
-  processors:
-  - bloblang: |
-      let orga = meta("organization") | meta("Organization")
-      meta organization = $orga
-      meta Organization = deleted()
-      root = if $orga != env("ORGANIZATION") { throw("Mismatch organization") } else { this }
-  - catch:
-    - log:
-        level: ERROR
-        message: Rejecting message because of empty organization
-    - bloblang: root = deleted()
-  - bloblang: |
-      root = this
-      meta Authorization = meta("Authorization")
-  - catch:
-    - log:
-        level: ERROR
-        message: Rejecting message, no auth provided
-    - bloblang: root = deleted()
-  - switch:
-    - check: meta("Authorization").uppercase().has_prefix("BASIC ")
-      processors:
-      - bloblang: |
-          let parts = meta("Authorization").slice(6).decode("base64").split(":")
-          let expectedUsername = env("HTTP_BASIC_USERNAME")
-          let expectedPassword = env("HTTP_BASIC_PASSWORD")
-          let username = $parts.index(0).string()
-          let password = $parts.index(1).string()
-          root = if $expectedPassword != $password { throw("Invalid provided password") } else { this }
-    - processors:
-      - bloblang: root = throw("Unknown auth method")
-  - catch:
-    - log:
-        level: ERROR
-        message: Rejecting message because of invalid authentication
-    - bloblang: root = deleted()
-  - bloblang: |
-      meta Authorization = deleted()
 
 output:
   broker:
     outputs:
     - stdout: {}
-    - kafka:
-        addresses:
-        - ${KAFKA_ADDRESS}
-        topic: ${KAFKA_TOPIC}
-        client_id: organization-collector
-        target_version: 1.0.0
-        tls:
-          enabled: ${KAFKA_TLS_ENABLED}
-        sasl:
-          enabled: ${KAFKA_SASL_ENABLED}
-          mechanism: ${KAFKA_SASL_MECHANISM}
-          user: ${KAFKA_SASL_USER}
-          password: ${KAFKA_SASL_PASSWORD}

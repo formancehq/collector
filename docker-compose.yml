@@ -1,37 +1,45 @@
 services:
   server:
-    image: jeffail/benthos:3.65
+    image: golang:1.18-alpine
     volumes:
-    - ./server.yaml:/config.yaml
-    - ./auth.yaml:/auth.yaml
+    - .:/src
+    working_dir: /src
     command:
+    - go
+    - run
+    - main.go
     - -c
-    - /config.yaml
+    - /src/server.yaml
     - -w
     - --log.level
     - DEBUG
     ports:
     - 4195:4195/tcp
+    - 4196:4196/tcp
     environment:
+      INTROSPECT_URL: https://api.staging.numary.cloud/auth/introspect
       OUTPUT: stdout
-      HTTP_BASIC_USERNAME: client1
-      HTTP_BASIC_PASSWORD: pass
-      ORGANIZATION: foo
 
   client:
-    image: jeffail/benthos:3.65
+    image: golang:1.18-alpine
     volumes:
-    - ./client.yaml:/config.yaml
+    - .:/src
+    working_dir: /src
     environment:
-      ENDPOINT: http://server:4195
-      ORGANIZATION: foo
+      ENDPOINT: http://server:4196
+      ORGANIZATION: ${ORG}
       ENDPOINT_USERNAME: client1
       ENDPOINT_PASSWORD: pass
+      AUTH_URL: https://api.staging.numary.cloud/auth/authenticate/tokens
+      AUTH_TOKEN: ${M2M_TOKEN}
     depends_on:
     - server
     command:
+    - go
+    - run
+    - main.go
     - -c
-    - /config.yaml
+    - /src/client.yaml
     - -w
     - --log.level
     - DEBUG

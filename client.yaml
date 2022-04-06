@@ -8,25 +8,25 @@ input:
     allowed_verbs:
     - POST
 
-pipeline:
-  processors:
-  - bloblang: |
-      root = this
-      meta organization = env("ORGANIZATION")
-
 output:
-  http_client:
+  numary_collector:
     url: ${ENDPOINT}
-    verb: POST
-    headers:
-      Content-Type: application/json
-    metadata:
-      include_patterns:
-      - .*
-    tls:
-      enabled: ${ENDPOINT_TLS_ENABLED}
-      skip_cert_verify: ${ENDPOINT_SKIP_CERT_VERIFY}
-    basic_auth:
-      enabled: true
-      username: ${ENDPOINT_USERNAME}
-      password: ${ENDPOINT_PASSWORD}
+    organization: ${ORGANIZATION}
+    auth:
+      url: ${AUTH_URL}
+      token: ${AUTH_TOKEN}
+#  http_client:
+#    url: ${ENDPOINT}
+#    verb: POST
+#    headers:
+#      Content-Type: application/json
+#    metadata:
+#      include_patterns:
+#      - .*
+#    tls:
+#      enabled: ${ENDPOINT_TLS_ENABLED}
+#      skip_cert_verify: ${ENDPOINT_SKIP_CERT_VERIFY}
+#    basic_auth:
+#      enabled: true
+#      username: ${ENDPOINT_USERNAME}
+#      password: ${ENDPOINT_PASSWORD}
