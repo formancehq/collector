@@ -3,6 +3,15 @@ module github.com/numary/collector
 go 1.18
 
 require (
+	github.com/Jeffail/benthos/v3 v3.65.0
+	github.com/dgraph-io/ristretto v0.1.0
+	github.com/golang-jwt/jwt/v4 v4.4.1
+	github.com/gorilla/handlers v1.5.1
+	github.com/gorilla/mux v1.8.0
+	github.com/numary/go-libs v0.0.0-20220406144830-95b054ae1022
+)
+
+require (
 	cloud.google.com/go v0.100.2 // indirect
 	cloud.google.com/go/compute v1.5.0 // indirect
 	cloud.google.com/go/iam v0.3.0 // indirect
@@ -18,7 +27,6 @@ require (
 	github.com/Azure/go-autorest/logger v0.2.1 // indirect
 	github.com/Azure/go-autorest/tracing v0.6.0 // indirect
 	github.com/ClickHouse/clickhouse-go v1.5.4 // indirect
-	github.com/Jeffail/benthos/v3 v3.65.0 // indirect
 	github.com/Jeffail/gabs/v2 v2.6.1 // indirect
 	github.com/Jeffail/grok v1.1.0 // indirect
 	github.com/Microsoft/go-winio v0.5.2 // indirect
@@ -38,7 +46,6 @@ require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/denisenkom/go-mssqldb v0.12.0 // indirect
-	github.com/dgraph-io/ristretto v0.1.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/eapache/go-resiliency v1.2.0 // indirect
@@ -55,7 +62,6 @@ require (
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
-	github.com/golang-jwt/jwt/v4 v4.4.1 // indirect
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
 	github.com/golang-sql/sqlexp v0.0.0-20170517235910-f1bb20e5a188 // indirect
 	github.com/golang/glog v1.0.0 // indirect
@@ -66,8 +72,6 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.2.0 // indirect
 	github.com/gorilla/css v1.0.0 // indirect
-	github.com/gorilla/handlers v1.5.1 // indirect
-	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hailocab/go-hostpool v0.0.0-20160125115350-e80d13ce29ed // indirect
 	github.com/hashicorp/go-uuid v1.0.2 // indirect
@@ -100,8 +104,6 @@ require (
 	github.com/nats-io/stan.go v0.10.2 // indirect
 	github.com/nsf/jsondiff v0.0.0-20210926074059-1e845ec5d249 // indirect
 	github.com/nsqio/go-nsq v1.1.0 // indirect
-	github.com/numary/go-libs v0.0.0-20220406144830-95b054ae1022 // indirect
-	github.com/numary/oauth2-introspect v0.0.0-20220406133319-6f34d6181984 // indirect
 	github.com/olivere/elastic/v7 v7.0.32 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/patrobinson/gokini v0.1.0 // indirect
