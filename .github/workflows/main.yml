@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+    - main
+
+name: Main
+jobs:
+  Build:
+    uses: numary/gh-workflows/.github/workflows/docker-build.yml@main
+    with:
+      go_version: 1.18
+      service: benthos
+      version: latest
+      sha: ${{ github.sha }}
+      env: staging
+    secrets:
+      NUMARY_GITHUB_TOKEN: ${{ secrets.NUMARY_GITHUB_TOKEN }}
+
+  BuildMain:
+    uses: numary/gh-workflows/.github/workflows/docker-build.yml@main
+    with:
+      go_version: 1.18
+      service: benthos
+      version: develop
+      sha: ${{ github.sha }}
+      env: main
+    secrets:
+      NUMARY_GITHUB_TOKEN: ${{ secrets.NUMARY_GITHUB_TOKEN }}
