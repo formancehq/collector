@@ -2,16 +2,17 @@ package orgcollector
 
 import (
 	"context"
-	"github.com/Jeffail/benthos/v3/public/service"
+	"io/ioutil"
+	"net"
+	"net/http"
+	"time"
+
+	"github.com/benthosdev/benthos/v4/public/service"
 	"github.com/dgraph-io/ristretto"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/numary/go-libs/oauth2/oauth2introspect"
 	"github.com/numary/go-libs/sharedauth/sharedauthjwt"
-	"io/ioutil"
-	"net"
-	"net/http"
-	"time"
 )
 
 type message struct {
@@ -80,7 +81,8 @@ func (i *Input) Connect(ctx context.Context) error {
 		return err
 	}
 
-	introspecter := oauth2introspect.NewIntrospecter(http.DefaultClient, i.cache, i.introspectUrl, i.cacheTTL)
+	introspecter := oauth2introspect.NewIntrospecter(i.introspectUrl,
+		oauth2introspect.WithCache(i.cache, i.cacheTTL))
 
 	m := mux.NewRouter()
 	m.Use(handlers.RecoveryHandler(
@@ -160,7 +162,7 @@ func NewInput(path, address, introspectUrl string, logger *service.Logger, cache
 }
 
 func init() {
-	service.RegisterInput(
+	err := service.RegisterInput(
 		"numary_collector",
 		service.NewConfigSpec().
 			Field(service.NewStringField("introspect_url")).
@@ -222,4 +224,7 @@ func init() {
 			return NewInput(path, address, introspectUrl, mgr.Logger(), cache, cacheTTL), nil
 		},
 	)
+	if err != nil {
+		panic(err)
+	}
 }

@@ -1,0 +1,13 @@
+version: '3'
+
+vars:
+  PKG: ./...
+
+tasks:
+  default:
+    cmds:
+      - task: lint
+
+  lint:
+    cmds:
+      - golangci-lint run -v --fix {{.PKG}}

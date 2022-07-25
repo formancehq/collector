@@ -6,10 +6,11 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"github.com/Jeffail/benthos/v3/public/service"
-	"github.com/golang-jwt/jwt/v4"
 	"net/http"
 	"time"
+
+	"github.com/benthosdev/benthos/v4/public/service"
+	"github.com/golang-jwt/jwt/v4"
 )
 
 type RoundTripper struct {
@@ -75,7 +76,7 @@ func (r *RoundTripper) RoundTrip(request *http.Request) (*http.Response, error) 
 	}
 
 	if rsp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("Unexpected status code %d", rsp.StatusCode)
+		return nil, fmt.Errorf("unexpected status code %d", rsp.StatusCode)
 	}
 	return rsp, nil
 }
@@ -151,7 +152,7 @@ func NewOutput(httpClient *http.Client, url string, org string) *Output {
 }
 
 func init() {
-	service.RegisterOutput(
+	err := service.RegisterOutput(
 		"numary_collector",
 		service.NewConfigSpec().
 			Field(service.NewStringField("url")).
@@ -203,4 +204,7 @@ func init() {
 			return NewOutput(httpClient, url, o), 10, nil
 		},
 	)
+	if err != nil {
+		panic(err)
+	}
 }
