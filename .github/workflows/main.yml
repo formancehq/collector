@@ -5,28 +5,27 @@ on:
 
 name: Main
 jobs:
-  goreleaser:
-    name: 'Build Binary'
+  lint:
+    uses: numary/gh-workflows/.github/workflows/golang-lint.yml@main
+
+  goreleaser-dry-run:
     runs-on: ubuntu-latest
+    needs:
+      - lint
     steps:
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '1.18'
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: 'go.mod'
+          cache: true
       - name: Fetch all tags
         run: git fetch --force --tags
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2
+        uses: goreleaser/goreleaser-action@v3
         with:
           version: latest
           args: build --parallelism 4 --rm-dist --skip-validate --snapshot
