@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/benthosdev/benthos/v4 v4.4.1
 	github.com/dgraph-io/ristretto v0.1.0
-	github.com/golang-jwt/jwt/v4 v4.4.2
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/gorilla/handlers v1.5.1
 	github.com/gorilla/mux v1.8.0
 	github.com/numary/go-libs v0.0.0-20220725095655-f5dc496adce9
